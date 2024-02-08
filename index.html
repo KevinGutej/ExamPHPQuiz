@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kevins online exam</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .question {
+        margin-bottom: 20px;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h2>Online Exam</h2>
+        <div id="timer">Time Left: <span id="time">10:00</span></div>
+        <div class="question" id="question1">
+            <h3>Question 1</h3>
+            <p>Jaki symbol ma zelazo?</p>
+            <input type="radio" name="q1" value="a"> Cu<br>
+            <input type="radio" name="q1" value="b"> Fe<br>
+            <input type="radio" name="q1" value="c"> Zn<br>
+        </div>
+        <button onclick="submitExam()">Submit</button>
+        <button onclick="nextQuestion()">Next Question</button>
+    </div>
+</body>
+</html>
