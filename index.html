@@ -27,5 +27,22 @@
         <button onclick="submitExam()">Submit</button>
         <button onclick="nextQuestion()">Next Question</button>
     </div>
+
+    <script>
+        function nextQuestion() {
+            var questions = document.querySelectorAll('.question');
+            for (var i = 0; i < questions.length; i++) {
+                if (!questions[i].classList.contains('hidden')) {
+                    questions[i].classList.add('hidden');
+                    if (i + 1 < questions.length) {
+                        questions[i + 1].classList.remove('hidden');
+                    }
+                    break;
+                }
+            }
+        }
+    </script>
+
+
 </body>
 </html>
