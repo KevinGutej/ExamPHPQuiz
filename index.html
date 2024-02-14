@@ -29,6 +29,19 @@
     </div>
 
     <script>
+        var timeleft = 900;
+        var timer = document.getElementById('time');
+        var interval = setInterval(function(){
+        var minutes = Math.floor(timeleft / 60);
+        var seconds = timeleft % 60;
+                timer.innerHTML = minutes + ':' + (seconds < 10 ? '0' + seconds : seconds);
+                timeleft--;
+                if (timeleft < 0) {
+                    clearInterval(interval);
+                    submitExam();
+                }
+            }, 1000);
+
         function nextQuestion() {
             var questions = document.querySelectorAll('.question');
             for (var i = 0; i < questions.length; i++) {
@@ -40,6 +53,11 @@
                     break;
                 }
             }
+        }
+
+        function submitExam() {
+            clearInterval(interval);
+            alert('Exam has been submitted');
         }
     </script>
 
