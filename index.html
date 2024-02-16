@@ -1,46 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kevins online exam</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-    }
-    .question {
-        margin-bottom: 20px;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        #timer {
+            text-align: right;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .question h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .question p {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .question input[type="radio"] {
+            margin-bottom: 5px;
+        }
+
+        button {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Online Exam</h2>
         <div id="timer">Time Left: <span id="time">10:00</span></div>
         <div class="question" id="question1">
             <h3>Question 1</h3>
-            <p>Jaki symbol ma zelazo?</p>
-            <input type="radio" name="q1" value="a"> Cu<br>
-            <input type="radio" name="q1" value="b"> Fe<br>
-            <input type="radio" name="q1" value="c"> Zn<br>
+            <p>What is the capital of France?</p>
+            <input type="radio" name="q1" value="a"> Paris<br>
+            <input type="radio" name="q1" value="b"> Rome<br>
+            <input type="radio" name="q1" value="c"> Madrid<br>
         </div>
+        <!-- Add more questions similarly -->
+
         <button onclick="submitExam()">Submit</button>
         <button onclick="nextQuestion()">Next Question</button>
     </div>
 
     <script>
-        var timeleft = 900;
+        var timeleft = 600; // 10 minutes in seconds
         var timer = document.getElementById('time');
-        var interval = setInterval(function(){
-        var minutes = Math.floor(timeleft / 60);
-        var seconds = timeleft % 60;
-                timer.innerHTML = minutes + ':' + (seconds < 10 ? '0' + seconds : seconds);
-                timeleft--;
-                if (timeleft < 0) {
-                    clearInterval(interval);
-                    submitExam();
-                }
-            }, 1000);
+        var interval = setInterval(function () {
+            var minutes = Math.floor(timeleft / 60);
+            var seconds = timeleft % 60;
+            timer.innerHTML = minutes + ':' + (seconds < 10 ? '0' + seconds : seconds);
+            timeleft--;
+            if (timeleft < 0) {
+                clearInterval(interval);
+                submitExam();
+            }
+        }, 1000);
 
         function nextQuestion() {
             var questions = document.querySelectorAll('.question');
@@ -57,10 +122,10 @@
 
         function submitExam() {
             clearInterval(interval);
-            alert('Exam has been submitted');
+            // Perform submission logic here
+            alert('Exam submitted!');
         }
     </script>
-
-
 </body>
+
 </html>
