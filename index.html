@@ -73,6 +73,28 @@
         .next-btn:hover {
             background-color: #0056b3;
         }
+
+        .question-numbers {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .question-numbers button {
+            margin: 5px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .question-numbers button.active {
+            background-color: #007bff;
+            color: #fff;
+        }
     </style>
 </head>
 
@@ -124,6 +146,14 @@
         <button onclick="nextQuestion()" class="next-btn" id="nextBtn">Next Question</button>
     </div>
 
+    <div class="question-numbers">
+        <button onclick="showQuestion(1)" class="active">1</button>
+        <button onclick="showQuestion(2)">2</button>
+        <button onclick="showQuestion(3)">3</button>
+        <button onclick="showQuestion(4)">4</button>
+        <button onclick="showQuestion(5)">5</button>
+    </div>
+
     <script>
         var currentQuestion = 1;
         var timeleft = 600;
@@ -156,11 +186,19 @@
             alert('Exam submitted!');
         }
 
-        document.querySelectorAll('input[type="radio"]').forEach(function (elem) {
-            elem.addEventListener('change', function () {
-                document.getElementById('nextBtn').style.display = 'inline-block';
+        function showQuestion(questionNumber) {
+            var questions = document.querySelectorAll('.question');
+            for (var i = 0; i < questions.length; i++) {
+                questions[i].style.display = 'none';
+            }
+            questions[questionNumber - 1].style.display = 'block';
+            currentQuestion = questionNumber;
+
+            document.querySelectorAll('.question-numbers button').forEach(function (button) {
+                button.classList.remove('active');
             });
-        });
+            document.querySelector('.question-numbers button:nth-child(' + questionNumber + ')').classList.add('active');
+        }
     </script>
 </body>
 
