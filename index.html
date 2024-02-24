@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,22 +22,10 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        #timer {
-            text-align: right;
-            margin-bottom: 20px;
-            font-size: 18px;
-        }
-
         .question {
-            margin-bottom: 20px;
+            margin-bottom: 40px;
             padding: 20px;
-            border: 1px solid #ccc;
+            border: 2px solid #333;
             border-radius: 5px;
             background-color: #f9f9f9;
         }
@@ -57,9 +44,12 @@
             margin-bottom: 5px;
         }
 
-        .next-btn {
-            display: none;
-            margin: 20px auto 0;
+        .navigation {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .navigation button {
             padding: 10px 20px;
             font-size: 16px;
             background-color: #007bff;
@@ -68,40 +58,39 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin: 0 10px;
         }
 
-        .next-btn:hover {
+        .navigation button:hover {
             background-color: #0056b3;
         }
 
-        .question-numbers {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #ccc;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .question-numbers button {
-            margin: 5px;
-            padding: 5px 10px;
+        #submitBtn {
+            padding: 12px 24px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        .question-numbers button.active {
-            background-color: #007bff;
-            color: #fff;
+        #submitBtn:hover {
+            background-color: #45a049;
+        }
+
+        #timer {
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: right;
         }
     </style>
 </head>
-
 <body>
     <div class="container">
-        <h2>Online Exam</h2>
         <div id="timer">Time Left: <span id="time">10:00</span></div>
+
         <div class="question" id="question1">
             <h3>Question 1</h3>
             <p>What is the capital of France?</p>
@@ -110,7 +99,7 @@
             <input type="radio" name="q1" value="c"> Madrid<br>
         </div>
 
-        <div class="question" id="question2" style="display: none;">
+        <div class="question" id="question2">
             <h3>Question 2</h3>
             <p>What is the chemical symbol for gold?</p>
             <input type="radio" name="q2" value="a"> Au<br>
@@ -118,7 +107,7 @@
             <input type="radio" name="q2" value="c"> Fe<br>
         </div>
 
-        <div class="question" id="question3" style="display: none;">
+        <div class="question" id="question3">
             <h3>Question 3</h3>
             <p>Who wrote the novel "To Kill a Mockingbird"?</p>
             <input type="radio" name="q3" value="a"> Harper Lee<br>
@@ -126,7 +115,7 @@
             <input type="radio" name="q3" value="c"> Stephen King<br>
         </div>
 
-        <div class="question" id="question4" style="display: none;">
+        <div class="question" id="question4">
             <h3>Question 4</h3>
             <p>What is the powerhouse of the cell?</p>
             <input type="radio" name="q4" value="a"> Nucleus<br>
@@ -134,7 +123,7 @@
             <input type="radio" name="q4" value="c"> Ribosome<br>
         </div>
 
-        <div class="question" id="question5" style="display: none;">
+        <div class="question" id="question5">
             <h3>Question 5</h3>
             <p>What is the highest mountain in the world?</p>
             <input type="radio" name="q5" value="a"> Mount Everest<br>
@@ -142,21 +131,17 @@
             <input type="radio" name="q5" value="c"> Kangchenjunga<br>
         </div>
 
-        <button onclick="submitExam()" id="submitBtn">Submit</button>
-        <button onclick="nextQuestion()" class="next-btn" id="nextBtn">Next Question</button>
-    </div>
-
-    <div class="question-numbers">
-        <button onclick="showQuestion(1)" class="active">1</button>
-        <button onclick="showQuestion(2)">2</button>
-        <button onclick="showQuestion(3)">3</button>
-        <button onclick="showQuestion(4)">4</button>
-        <button onclick="showQuestion(5)">5</button>
+        <div class="navigation">
+            <button onclick="prevQuestion()">Previous</button>
+            <button onclick="nextQuestion()">Next</button>
+            <button onclick="submitExam()" id="submitBtn">Submit</button>
+        </div>
     </div>
 
     <script>
         var currentQuestion = 1;
-        var timeleft = 600;
+        var totalQuestions = 5;
+        var timeleft = 600; // 10 minutes in seconds
         var timer = document.getElementById('time');
         var interval = setInterval(function () {
             var minutes = Math.floor(timeleft / 60);
@@ -170,36 +155,28 @@
         }, 1000);
 
         function nextQuestion() {
-            var questions = document.querySelectorAll('.question');
-            questions[currentQuestion - 1].style.display = 'none';
-            currentQuestion++;
-            questions[currentQuestion - 1].style.display = 'block';
+            if (currentQuestion < totalQuestions) {
+                document.getElementById('question' + currentQuestion).style.display = 'none';
+                currentQuestion++;
+                document.getElementById('question' + currentQuestion).style.display = 'block';
+                document.getElementById('submitBtn').style.display = (currentQuestion === totalQuestions) ? 'inline-block' : 'none';
+            }
+        }
 
-            if (currentQuestion === questions.length) {
-                document.getElementById('submitBtn').style.display = 'inline-block';
-                document.getElementById('nextBtn').style.display = 'none';
+        function prevQuestion() {
+            if (currentQuestion > 1) {
+                document.getElementById('question' + currentQuestion).style.display = 'none';
+                currentQuestion--;
+                document.getElementById('question' + currentQuestion).style.display = 'block';
+                document.getElementById('submitBtn').style.display = (currentQuestion === totalQuestions) ? 'inline-block' : 'none';
             }
         }
 
         function submitExam() {
             clearInterval(interval);
+            // Perform submission logic here
             alert('Exam submitted!');
-        }
-
-        function showQuestion(questionNumber) {
-            var questions = document.querySelectorAll('.question');
-            for (var i = 0; i < questions.length; i++) {
-                questions[i].style.display = 'none';
-            }
-            questions[questionNumber - 1].style.display = 'block';
-            currentQuestion = questionNumber;
-
-            document.querySelectorAll('.question-numbers button').forEach(function (button) {
-                button.classList.remove('active');
-            });
-            document.querySelector('.question-numbers button:nth-child(' + questionNumber + ')').classList.add('active');
         }
     </script>
 </body>
-
 </html>
