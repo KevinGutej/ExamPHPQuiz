@@ -134,7 +134,7 @@
         <div class="navigation">
             <button onclick="prevQuestion()">Previous</button>
             <button onclick="nextQuestion()">Next</button>
-            <button onclick="submitExam()" id="submitBtn">Submit</button>
+            <button onclick="submitExam()" id="submitBtn" style="display: none;">Submit</button>
         </div>
     </div>
 
@@ -174,8 +174,24 @@
 
         function submitExam() {
             clearInterval(interval);
-            // Perform submission logic here
-            alert('Exam submitted!');
+            var score = 0;
+            for (var i = 1; i <= totalQuestions; i++) {
+                var selectedOption = document.querySelector('input[name="q' + i + '"]:checked');
+                if (selectedOption) {
+                    if (selectedOption.value === 'a' && i === 1) {
+                        score++;
+                    } else if (selectedOption.value === 'b' && i === 2) {
+                        score++;
+                    } else if (selectedOption.value === 'a' && i === 3) {
+                        score++;
+                    } else if (selectedOption.value === 'b' && i === 4) {
+                        score++;
+                    } else if (selectedOption.value === 'a' && i === 5) {
+                        score++;
+                    }
+                }
+            }
+            alert('Your score is ' + score + ' out of 8.');
         }
     </script>
 </body>
