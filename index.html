@@ -12,11 +12,30 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 999;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 20px;
         }
 
         .container {
             width: 80%;
-            margin: 50px auto;
             background-color: #fff;
             padding: 20px;
             border-radius: 10px;
@@ -24,16 +43,12 @@
         }
 
         .question {
+            display: none;
             margin-bottom: 40px;
             padding: 20px;
             border: 2px solid #333;
             border-radius: 5px;
             background-color: #f9f9f9;
-            display: none;
-        }
-
-        .question.active {
-            display: block;
         }
 
         .question h3 {
@@ -91,69 +106,21 @@
             margin-bottom: 20px;
             text-align: right;
         }
-
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            text-align: center;
-        }
-
-        .modal-content h2 {
-            margin-top: 0;
-            color: #333;
-        }
-
-        .modal-content p {
-            margin-bottom: 20px;
-            font-size: 18px;
-            color: #555;
-        }
-
-        .modal-content button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .modal-content button:hover {
-            background-color: #0056b3;
-        }
     </style>
 </head>
 
 <body>
-    <div class="modal-overlay" id="scoreModal">
-        <div class="modal-content">
-            <h2>Exam Results</h2>
-            <p id="scoreMessage">Your score is X out of 8.</p>
-            <button onclick="closeModal()">Close</button>
-        </div>
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="#">Subjects</a>
+        <a href="#">About</a>
+        <a href="#">Learning Tools</a>
     </div>
 
     <div class="container">
         <div id="timer">Time Left: <span id="time">10:00</span></div>
 
-        <div class="question active" id="question1">
+        <div class="question" id="question1" style="display: block;">
             <h3>Question 1</h3>
             <p>What is the capital of France?</p>
             <input type="radio" name="q1" value="a"> Paris<br>
@@ -203,7 +170,7 @@
     <script>
         var currentQuestion = 1;
         var totalQuestions = 5;
-        var timeleft = 120;
+        var timeleft = 120; 
         var timer = document.getElementById('time');
         var interval = setInterval(function () {
             var minutes = Math.floor(timeleft / 60);
@@ -218,24 +185,31 @@
 
         function nextQuestion() {
             if (currentQuestion < totalQuestions) {
-                document.getElementById('question' + currentQuestion).classList.remove('active');
+                document.getElementById('question' + currentQuestion).style.display = 'none';
                 currentQuestion++;
-                document.getElementById('question' + currentQuestion).classList.add('active');
+                document.getElementById('question' + currentQuestion).style.display = 'block';
                 document.getElementById('submitBtn').style.display = (currentQuestion === totalQuestions) ? 'inline-block' : 'none';
             }
         }
 
         function prevQuestion() {
             if (currentQuestion > 1) {
-                document.getElementById('question' + currentQuestion).classList.remove('active');
+                document.getElementById('question' + currentQuestion).style.display = 'none';
                 currentQuestion--;
-                document.getElementById('question' + currentQuestion).classList.add('active');
+                document.getElementById('question' + currentQuestion).style.display = 'block';
                 document.getElementById('submitBtn').style.display = (currentQuestion === totalQuestions) ? 'inline-block' : 'none';
             }
         }
 
         function submitExam() {
             clearInterval(interval);
+            var score = calculateScore();
+            var correctAnswers = getCorrectAnswers();
+            var url = "results.html?score=" + score + "&correctAnswers=" + encodeURIComponent(JSON.stringify(correctAnswers));
+            window.location.href = url;
+        }
+
+        function calculateScore() {
             var score = 0;
             for (var i = 1; i <= totalQuestions; i++) {
                 var selectedOption = document.querySelector('input[name="q' + i + '"]:checked');
@@ -253,19 +227,13 @@
                     }
                 }
             }
-            openModal(score);
+            return score;
         }
 
-        function openModal(score) {
-            var modal = document.getElementById('scoreModal');
-            var scoreMessage = document.getElementById('scoreMessage');
-            scoreMessage.innerHTML = "Your score is " + score + " out of 8.";
-            modal.style.display = "flex";
-        }
-
-        function closeModal() {
-            var modal = document.getElementById('scoreModal');
-            modal.style.display = "none";
+        function getCorrectAnswers() {
+            var correctAnswers = [];
+            correctAnswers.push('a', 'a', 'b', 'b', 'a');
+            return correctAnswers;
         }
     </script>
 </body>
