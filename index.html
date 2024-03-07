@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,6 +37,35 @@
             margin-right: 20px;
             font-size: 16px;
             font-weight: bold;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: #fff;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #555;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
 
         .container {
@@ -114,17 +142,23 @@
         }
     </style>
 </head>
-
 <body>
     <div class="navbar">
         <a href="#">Home</a>
-        <a href="#">Subjects</a>
+        <div class="dropdown">
+            <a href="#" class="dropbtn">Subjects</a>
+            <div class="dropdown-content">
+                <a href="#">Matematyka</a>
+                <a href="#">Fizyka</a>
+                <a href="#">Informatyka</a>
+            </div>
+        </div>
         <a href="#">About</a>
         <a href="#">Learning Tools</a>
     </div>
 
     <div class="container">
-        <div id="timer">Time Left: <span id="time">10:00</span></div>
+        <div id="timer">Time Left: <span id="time">02:00</span></div>
 
         <div class="question" id="question1" style="display: block;">
             <h3>Question 1</h3>
@@ -181,7 +215,7 @@
         var interval = setInterval(function () {
             var minutes = Math.floor(timeleft / 60);
             var seconds = timeleft % 60;
-            timer.innerHTML = minutes + ':' + (seconds < 10 ? '0' + seconds : seconds);
+            timer.innerHTML = (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
             timeleft--;
             if (timeleft < 0) {
                 clearInterval(interval);
@@ -243,5 +277,4 @@
         }
     </script>
 </body>
-
 </html>
