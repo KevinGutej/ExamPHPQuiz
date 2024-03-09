@@ -140,10 +140,56 @@
             margin-bottom: 20px;
             text-align: right;
         }
+
+        .password-container {
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <div class="navbar">
+    <div class="password-container">
+        <label for="password">Enter the password to start the exam:</label>
+        <input type="password" id="password">
+        <button class="btn-submit" onclick="checkPassword()">Submit</button>
+        <div id="error-message" class="error-message">Incorrect password. Please try again.</div>
+    </div>
+
+    <div class="navbar" style="display: none;">
         <a href="#">Home</a>
         <div class="dropdown">
             <a href="#" class="dropbtn">Subjects</a>
@@ -157,7 +203,7 @@
         <a href="#">Learning Tools</a>
     </div>
 
-    <div class="container">
+    <div class="container" style="display: none;">
         <div id="timer">Time Left: <span id="time">02:00</span></div>
 
         <div class="question" id="question1" style="display: block;">
@@ -212,16 +258,20 @@
         var totalQuestions = 5;
         var timeleft = 120;
         var timer = document.getElementById('time');
-        var interval = setInterval(function () {
-            var minutes = Math.floor(timeleft / 60);
-            var seconds = timeleft % 60;
-            timer.innerHTML = (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
-            timeleft--;
-            if (timeleft < 0) {
-                clearInterval(interval);
-                submitExam();
-            }
-        }, 1000);
+        var interval;
+
+        function startTimer() {
+            interval = setInterval(function () {
+                var minutes = Math.floor(timeleft / 60);
+                var seconds = timeleft % 60;
+                timer.innerHTML = (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
+                timeleft--;
+                if (timeleft < 0) {
+                    clearInterval(interval);
+                    submitExam();
+                }
+            }, 1000);
+        }
 
         function nextQuestion() {
             if (currentQuestion < totalQuestions) {
@@ -268,6 +318,18 @@
                 }
             }
             return score;
+        }
+
+        function checkPassword() {
+            var password = document.getElementById("password").value;
+            if (password === "3916") {
+                document.querySelector('.password-container').style.display = 'none';
+                document.querySelector('.navbar').style.display = 'flex';
+                document.querySelector('.container').style.display = 'block';
+                startTimer();
+            } else {
+                document.getElementById("error-message").style.display = "block";
+            }
         }
 
         function getCorrectAnswers() {
