@@ -29,6 +29,7 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
+            display: none;
         }
 
         .navbar a {
@@ -74,6 +75,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
         }
 
         .question {
@@ -189,7 +191,7 @@
         <div id="error-message" class="error-message">Incorrect password. Please try again.</div>
     </div>
 
-    <div class="navbar" style="display: none;">
+    <div class="navbar">
         <a href="#">Home</a>
         <div class="dropdown">
             <a href="#" class="dropbtn">Subjects</a>
@@ -203,7 +205,7 @@
         <a href="#">Learning Tools</a>
     </div>
 
-    <div class="container" style="display: none;">
+    <div class="container">
         <div id="timer">Time Left: <span id="time">02:00</span></div>
 
         <div class="question" id="question1" style="display: block;">
