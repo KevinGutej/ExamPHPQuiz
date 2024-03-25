@@ -13,9 +13,60 @@
             padding: 0;
         }
 
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 20px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: #fff;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #555;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
         .container {
             max-width: 800px;
-            margin: 50px auto;
+            margin: 100px auto 50px;
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
@@ -61,6 +112,20 @@
 </head>
 
 <body>
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <div class="dropdown">
+            <a href="#" class="dropbtn">Subjects</a>
+            <div class="dropdown-content">
+                <a href="#">Matematyka</a>
+                <a href="#">Fizyka</a>
+                <a href="#">Informatyka</a>
+            </div>
+        </div>
+        <a href="about.html">About</a>
+        <a href="#">Learning Tools</a>
+    </div>
+
     <div class="container">
         <h1>About Us</h1>
         <div class="box-container">
